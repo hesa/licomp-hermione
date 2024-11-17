@@ -41,8 +41,8 @@ jobs:
           echo "::error ::secrets.PYPI_API_TOKEN needs to be set for this action"
           exit 1
         fi
-        if [ -z "${{ secrets.LICOMP }}" ]; then
-          echo "::error ::secrets.LICOMP needs to be set for this action"
+        if [ -z "${{ secrets.LICOMP_HERMIONE }}" ]; then
+          echo "::error ::secrets.LICOMP_HERMIONE needs to be set for this action"
           exit 1
         fi
         if [ "${{ github.event_name == 'workflow_dispatch' }}" = "true" ]; then
@@ -95,7 +95,7 @@ jobs:
       run: |
         pip install -r requirements-dev.txt
         echo "Bump version: bump2version --list ${{ steps.release-needed.outputs.RELEASE_TYPE }} ${{ env.VERSION_FILE }} >> $GITHUB_OUTPUT"
-        bump2version --list ${{ steps.release-needed.outputs.RELEASE_TYPE }} ${{ env.VERSION_FILE }} >> $GITHUB_OUTPUT
+        bump2version --new-version 0.1.3 --list ${{ steps.release-needed.outputs.RELEASE_TYPE }} ${{ env.VERSION_FILE }} >> $GITHUB_OUTPUT
 
     - name: Build
       if: steps.release-needed.outputs.DO_RELEASE == 'true'
@@ -115,7 +115,7 @@ jobs:
       with:
         tag: ${{ steps.version-bump.outputs.new_version }}
         generateReleaseNotes: true
-        token: ${{ secrets.LICOMP }}
+        token: ${{ secrets.LICOMP_HERMIONE }}
 
     - name: Publish package
       if: steps.release-needed.outputs.DO_RELEASE == 'true' && env.PYPI_PUBLISH == '1'
