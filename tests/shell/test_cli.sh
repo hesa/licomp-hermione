@@ -17,6 +17,6 @@ lh()
 lh --help
 lh --name
 lh --version
-lh supported-triggers
+lh supported-provisionings
 lh supported-licenses
 lh verify -il MIT -ol BSD-3-Clause
