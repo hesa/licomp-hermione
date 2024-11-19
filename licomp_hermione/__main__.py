@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from licomp.interface import ObligationTrigger
+from licomp.interface import Provisioning
 from licomp.main_base import LicompParser
 
 from licomp_hermione.config import cli_name
@@ -18,7 +18,7 @@ def main():
                             cli_name,
                             description,
                             epilog,
-                            ObligationTrigger.BIN_DIST)
+                            Provisioning.BIN_DIST)
     o_parser.run()
 
 

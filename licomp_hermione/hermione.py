@@ -11,8 +11,9 @@ from licomp_hermione.config import module_name
 from licomp_hermione.config import version
 
 from licomp.interface import Licomp
-from licomp.interface import ObligationTrigger
-from licomp.interface import ModifiedTrigger
+from licomp.interface import Provisioning
+from licomp.interface import UseCase
+from licomp.interface import Modification
 from licomp.interface import CompatibilityStatus
 
 SCRIPT_DIR = os.path.dirname(__file__)
@@ -22,28 +23,28 @@ class LicompHermione(Licomp):
 
     def __init__(self):
         self.file_map = {
-            ObligationTrigger.BIN_DIST: {
-                ModifiedTrigger.UNMODIFIED: 'hermione-matrix-DistributionNonSource-Unmodified.json',
-                ModifiedTrigger.MODIFIED: 'hermione-matrix-DistributionNonSource-Altered.json',
+            Provisioning.BIN_DIST: {
+                Modification.UNMODIFIED: 'hermione-matrix-DistributionNonSource-Unmodified.json',
+                Modification.MODIFIED: 'hermione-matrix-DistributionNonSource-Altered.json',
             },
-            ObligationTrigger.SOURCE_DIST: {
-                ModifiedTrigger.UNMODIFIED: 'hermione-matrix-DistributionSource-Unmodified.json',
-                ModifiedTrigger.MODIFIED: 'hermione-matrix-DistributionSource-Altered.json',
+            Provisioning.SOURCE_DIST: {
+                Modification.UNMODIFIED: 'hermione-matrix-DistributionSource-Unmodified.json',
+                Modification.MODIFIED: 'hermione-matrix-DistributionSource-Altered.json',
             },
         }
         self.licenes_map = {
-            ObligationTrigger.BIN_DIST: {
-                ModifiedTrigger.UNMODIFIED: None,
-                ModifiedTrigger.MODIFIED: None,
+            Provisioning.BIN_DIST: {
+                Modification.UNMODIFIED: None,
+                Modification.MODIFIED: None,
             },
-            ObligationTrigger.SOURCE_DIST: {
-                ModifiedTrigger.UNMODIFIED: None,
-                ModifiedTrigger.MODIFIED: None,
+            Provisioning.SOURCE_DIST: {
+                Modification.UNMODIFIED: None,
+                Modification.MODIFIED: None,
             },
         }
         Licomp.__init__(self)
-        self.triggers = [ObligationTrigger.BIN_DIST, ObligationTrigger.SOURCE_DIST]
-
+        self.provisionings = [Provisioning.BIN_DIST, Provisioning.SOURCE_DIST]
+        self.usecase = [UseCase.LIBRARY]
         self.ret_statuses = {
             "yes": CompatibilityStatus.COMPATIBLE,
             "no": CompatibilityStatus.INCOMPATIBLE,
@@ -56,30 +57,34 @@ class LicompHermione(Licomp):
         return version
 
     def __licenses_from_file(self,
-                             trigger=ObligationTrigger.BIN_DIST,
-                             modified=ModifiedTrigger.UNMODIFIED):
-        if not self.licenes_map[trigger][modified]:
-            filename = os.path.join(VAR_DIR, self.file_map[trigger][modified])
+                             provisioning=Provisioning.BIN_DIST,
+                             modification=Modification.UNMODIFIED):
+        if not self.licenes_map[provisioning][modification]:
+            filename = os.path.join(VAR_DIR, self.file_map[provisioning][modification])
             with open(filename) as fp:
                 data = json.load(fp)
-                self.licenes_map[trigger][modified] = data['licenses']
+                self.licenes_map[provisioning][modification] = data['licenses']
 
-        return self.licenes_map[trigger][modified]
+        return self.licenes_map[provisioning][modification]
 
     def supported_licenses(self):
         # we can check any of the files for the supported licenses
         return list(self.__licenses_from_file().keys())
 
-    def supported_triggers(self):
-        return self.triggers
+    def supported_provisionings(self):
+        return self.provisionings
+
+    def supported_usecases(self):
+        return self.usecase
 
     def _outbound_inbound_compatibility(self,
                                         outbound,
                                         inbound,
-                                        trigger=ObligationTrigger.BIN_DIST,
-                                        modified=ModifiedTrigger.UNMODIFIED):
+                                        usecase,
+                                        provisioning=Provisioning.BIN_DIST,
+                                        modification=Modification.UNMODIFIED):
 
-        licenses = self.__licenses_from_file(trigger, modified)
+        licenses = self.__licenses_from_file(provisioning, modification)
         values = licenses[outbound][inbound]
 
         return self.outbound_inbound_reply(self.ret_statuses[values],

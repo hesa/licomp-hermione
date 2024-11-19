@@ -20,7 +20,10 @@ build:
 	rm -fr build && python3 setup.py sdist
 
 test:
-	PYTHONPATH=. python3 -m pytest --log-cli-level=10 tests/
+	PYTHONPATH=.: python3 -m pytest --log-cli-level=10 tests/
+
+test-local:
+	PYTHONPATH=.:../licomp python3 -m pytest --log-cli-level=10 tests/
 
 install:
 	pip install .
