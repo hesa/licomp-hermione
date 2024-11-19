@@ -18,6 +18,7 @@ def main():
                             cli_name,
                             description,
                             epilog,
+                            UseCase.LIBRARY,
                             Provisioning.BIN_DIST)
     o_parser.run()
 
