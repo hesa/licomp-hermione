@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from licomp.interface import Provisioning
+from licomp.interface import UseCase
 from licomp.main_base import LicompParser
 
 from licomp_hermione.config import cli_name
