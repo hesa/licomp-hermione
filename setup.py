@@ -33,7 +33,7 @@ setuptools.setup(
         ],
     },
     package_data={
-        f'{module_name}': ['var/*.json'],
+        f'{module_name}': ['data/*.json'],
     },
     install_requires=requirements,
     extras_require={
