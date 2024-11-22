@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 version = '0.2.0'
+supported_api_version = '0.3'
 
 repo = 'https://github.com/hesa/licomp-hermione/'
 disclaimer = 'The data or the output of the tools in this repository come with guarantee'

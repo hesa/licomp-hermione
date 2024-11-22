@@ -9,6 +9,7 @@ import os
 
 from licomp_hermione.config import module_name
 from licomp_hermione.config import version
+from licomp_hermione.config import supported_api_version
 
 from licomp.interface import Licomp
 from licomp.interface import Provisioning
@@ -17,7 +18,7 @@ from licomp.interface import Modification
 from licomp.interface import CompatibilityStatus
 
 SCRIPT_DIR = os.path.dirname(__file__)
-VAR_DIR = os.path.join(SCRIPT_DIR, 'var')
+VAR_DIR = os.path.join(SCRIPT_DIR, 'data')
 
 class LicompHermione(Licomp):
 
@@ -31,6 +32,10 @@ class LicompHermione(Licomp):
                 Modification.UNMODIFIED: 'hermione-matrix-DistributionSource-Unmodified.json',
                 Modification.MODIFIED: 'hermione-matrix-DistributionSource-Altered.json',
             },
+            Provisioning.LOCAL_USE: {
+                Modification.UNMODIFIED: 'hermione-matrix-InternalUse-Unmodified.json',
+                Modification.MODIFIED: 'hermione-matrix-InternalUse-Altered.json',
+            },
         }
         self.licenes_map = {
             Provisioning.BIN_DIST: {
@@ -41,9 +46,13 @@ class LicompHermione(Licomp):
                 Modification.UNMODIFIED: None,
                 Modification.MODIFIED: None,
             },
+            Provisioning.LOCAL_USE: {
+                Modification.UNMODIFIED: None,
+                Modification.MODIFIED: None,
+            },
         }
         Licomp.__init__(self)
-        self.provisionings = [Provisioning.BIN_DIST, Provisioning.SOURCE_DIST]
+        self.provisionings = [Provisioning.BIN_DIST, Provisioning.SOURCE_DIST, Provisioning.LOCAL_USE]
         self.usecase = [UseCase.LIBRARY]
         self.ret_statuses = {
             "yes": CompatibilityStatus.COMPATIBLE,
@@ -76,6 +85,9 @@ class LicompHermione(Licomp):
 
     def supported_usecases(self):
         return self.usecase
+
+    def supported_api_version(self):
+        return supported_api_version
 
     def _outbound_inbound_compatibility(self,
                                         outbound,
