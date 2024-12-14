@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# SPDX-FileCopyrightText: 2024 Henrik Sandklef
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+if [ "$1" = "--local" ]
+then
+    shift
+    EXTRA_PYTHONPATH=:../licomp
+fi     
+if [ "$1" = "" ]
+then
+    ARGS="verify -il MIT -ol MIT"
+fi     
+
+PYTHONPATH=.${EXTRA_PYTHONPATH} ./licomp_hermione/__main__.py $* $ARGS
