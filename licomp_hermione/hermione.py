@@ -8,7 +8,10 @@ import json
 import os
 
 from licomp_hermione.config import module_name
+from licomp_hermione.config import module_url
+from licomp_hermione.config import original_data_url
 from licomp_hermione.config import version
+from licomp_hermione.config import disclaimer
 from licomp_hermione.config import supported_api_version
 
 from licomp.interface import Licomp
@@ -64,6 +67,15 @@ class LicompHermione(Licomp):
 
     def version(self):
         return version
+
+    def url(self):
+        return module_url
+
+    def data_url(self):
+        return original_data_url
+
+    def disclaimer(self):
+        return disclaimer
 
     def __licenses_from_file(self,
                              provisioning=Provisioning.BIN_DIST,
