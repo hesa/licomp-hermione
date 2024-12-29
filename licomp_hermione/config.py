@@ -3,12 +3,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 version = '0.3.1'
-supported_api_version = '0.3'
+supported_api_version = '0.4'
 
 repo = 'https://github.com/hesa/licomp-hermione/'
-disclaimer = 'The data or the output of the tools in this repository come with guarantee'
+disclaimer = 'The data or the output of the tools in this repository come with guarantee. For legal advice, contact a lawyer.'
 cli_name = 'licomp-hermione'
 module_name = 'licomp_hermione'
+module_url = 'https://github.com/hesa/licomp-hermione'
+original_data_url = 'https://github.com/hesa/hermione'
 
 description = """
 
@@ -39,5 +41,5 @@ COPYRIGHT
   License GPL-3.0-or-later
 
 ATTRIBUTION
-  licomp-hermione is using the license compatibility matrix from Hermine project.
+  licomp-hermione is using the license compatibility matrix from Hermione project, partly derived from Hermine-data of the Hermine project.
 """
