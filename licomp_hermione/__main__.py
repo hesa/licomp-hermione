@@ -1,8 +1,10 @@
 #!/bin/env python3
 
-# SPDX-FileCopyrightText: 2024 Henrik Sandklef
+# SPDX-FileCopyrightText: 2025 Henrik Sandklef
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
+
+import sys
 
 from licomp.interface import Provisioning
 from licomp.interface import UseCase
@@ -21,8 +23,8 @@ def main():
                             epilog,
                             UseCase.LIBRARY,
                             Provisioning.BIN_DIST)
-    o_parser.run()
+    return o_parser.run()
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
