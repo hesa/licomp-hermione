@@ -42,6 +42,7 @@ jobs:
     - name: CLI check
       run: |
         tests/shell/test_cli.sh
+        tests/shell/test_returns.sh
 
   generate:
     runs-on: ubuntu-latest
