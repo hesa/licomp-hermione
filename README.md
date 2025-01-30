@@ -1,4 +1,4 @@
-# licomp-osadl
+# licomp-hermione
 
 Implementation of Licomp using [Hermione](https://github.com/hesa/hermione)
 
